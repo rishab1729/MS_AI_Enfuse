@@ -1,4 +1,5 @@
-"[server]" 
-"headless = true" 
-"port = 8501" 
-"enableCORS = false" 
+[server] 
+maxUploadSize = 1000
+headless = true 
+port = 8501 
+enableCORS = false 
