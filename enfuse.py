@@ -9,6 +9,8 @@ from PIL import Image
 from itertools import groupby
 from operator import itemgetter
 import cv2
+import platform
+
 
 def convert_to_rgba(input_path):
     """Convert an image file to RGBA format and save it."""
@@ -50,7 +52,10 @@ def extract_time_from_image(file_path):
 
     """Extract the timestamp from an image file using exiftool."""
     try:
-        exiftool_path = r"exiftool.exe"
+        if platform.system() == "Windows":
+            exiftool_path = "exiftool.exe"
+        else:
+            exiftool_path = "exiftool"
         with exiftool.ExifToolHelper(executable=exiftool_path) as et:
             metadata = et.get_metadata(file_path)
             timestamp = metadata[0].get('EXIF:DateTimeOriginal')
@@ -205,8 +210,10 @@ def process_folderY(input_folder, output_folder):
 
 
 if __name__ == "__main__":
-    input_folder = r"C:\Users\risha\Documents\app\auto_image_filter\exp_data_folder\images3"
-    output_folder = r"C:\Users\risha\Documents\app\auto_image_filter\exp_data_folder\output_data"
+    # input_folder = r"C:\Users\risha\Documents\app\auto_image_filter\exp_data_folder\images3"
+    # output_folder = r"C:\Users\risha\Documents\app\auto_image_filter\exp_data_folder\output_data"
+    input_folder = input("Enter the input folder path: ")
+    output_folder = input("Enter the output folder path: ")
     # process_folder(input_folder, output_folder)
     for status in process_folderY(input_folder, output_folder):
         print(status)
